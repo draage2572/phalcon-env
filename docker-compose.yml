@@ -1,0 +1,74 @@
+version: "2"
+services:
+    nginx:
+        networks:
+            s-net:
+                ipv4_address: 192.168.30.10
+        container_name: 's-nginx'
+        build:
+            context: .
+            dockerfile: nginx-dockerfile
+        links:
+            - fpm
+            - mongo-db
+            - mysql-db
+        volumes:
+            - /var/www/html:/var/www/html
+    fpm:
+        networks:
+            s-net:
+                ipv4_address: 192.168.30.11
+        container_name: 's-fpm'
+        build:
+            context: .
+            dockerfile: fpm-dockerfile
+        links:
+            - mongo-db
+            - mysql-db
+        volumes:
+            - /var/www/html:/var/www/html
+        restart: always
+    mongo-db:
+        networks:
+            s-net:
+                ipv4_address: 192.168.30.254
+        container_name: 's-mongo'
+        image: mongo
+        volumes:
+            - /var/www/storage/mongo:/data/db
+        restart: always
+    mysql-db:
+        networks:
+            s-net:
+                ipv4_address: 192.168.30.253
+        container_name: 's-mysql'
+        image: mysql:5.7
+        volumes:
+            - /var/www/storage/mysql:/var/lib/mysql
+        restart: always
+        environment:
+            MYSQL_ROOT_PASSWORD: phalcon
+            MYSQL_DATABASE: phalcon
+            MYSQL_USER: phalcon
+            MYSQL_PASSWORD: phalcon
+    phpunit:
+        container_name: 's-phpunit'
+        image: phpunit/phpunit
+        volumes:
+            - /var/www/html:/var/www/html
+    codeception:
+        container_name: 's-codeception'
+        image: codeception/codeception
+        volumes:
+            - /var/www/html:/var/www/html
+    composer:
+        container_name: 's-composer'
+        image: composer/composer
+        volumes:
+            - /var/www/html:/var/www/html
+networks:
+    s-net:
+        driver: bridge
+        ipam:
+            config:
+                - subnet: 192.168.30.0/24

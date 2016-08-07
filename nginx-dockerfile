@@ -1,0 +1,6 @@
+# nginx-dockerfile
+FROM phalconphp/nginx
+
+#config
+ADD config/default.conf /etc/nginx/conf.d
+ADD config/phalcon-boot.conf /etc/nginx/conf.d

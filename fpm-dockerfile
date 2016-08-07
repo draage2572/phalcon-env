@@ -1,0 +1,5 @@
+FROM phalconphp/php-fpm
+
+ADD php/xdebug-settings.ini /etc/php/7.0/mods-available
+RUN ln -s /etc/php/7.0/mods-available/xdebug.ini /etc/php/7.0/fpm/conf.d/25-xdebug.ini
+RUN ln -s /etc/php/7.0/mods-available/xdebug-settings.ini /etc/php/7.0/fpm/conf.d/40-xdebug-settings.ini
