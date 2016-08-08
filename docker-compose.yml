@@ -51,21 +51,6 @@ services:
             MYSQL_DATABASE: phalcon
             MYSQL_USER: phalcon
             MYSQL_PASSWORD: phalcon
-    phpunit:
-        container_name: 's-phpunit'
-        image: phpunit/phpunit
-        volumes:
-            - /var/www/html:/var/www/html
-    codeception:
-        container_name: 's-codeception'
-        image: codeception/codeception
-        volumes:
-            - /var/www/html:/var/www/html
-    composer:
-        container_name: 's-composer'
-        image: composer/composer
-        volumes:
-            - /var/www/html:/var/www/html
 networks:
     s-net:
         driver: bridge
