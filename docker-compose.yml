@@ -27,7 +27,6 @@ services:
             - mysql-db
         volumes:
             - /var/www/html:/var/www/html
-        restart: always
     mongo-db:
         networks:
             s-net:
@@ -36,7 +35,6 @@ services:
         image: mongo
         volumes:
             - /var/www/storage/mongo:/data/db
-        restart: always
     mysql-db:
         networks:
             s-net:
@@ -45,7 +43,6 @@ services:
         image: mysql:5.7
         volumes:
             - /var/www/storage/mysql:/var/lib/mysql
-        restart: always
         environment:
             MYSQL_ROOT_PASSWORD: phalcon
             MYSQL_DATABASE: phalcon
